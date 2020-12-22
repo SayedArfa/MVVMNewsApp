@@ -1,4 +1,4 @@
-package com.androiddevs.mvvmnewsapp.models
+package com.androiddevs.mvvmnewsapp.data.models
 
 
 import androidx.room.Entity
@@ -8,7 +8,7 @@ import java.io.Serializable
 @Entity(
     tableName = "articles"
 )
-data class Article(
+data class ArticleEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null,
     val author: String?,

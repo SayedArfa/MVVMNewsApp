@@ -1,4 +1,4 @@
-package com.androiddevs.mvvmnewsapp.adapters
+package com.androiddevs.mvvmnewsapp.ui.news
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,13 +7,14 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.androiddevs.mvvmnewsapp.R
-import com.androiddevs.mvvmnewsapp.models.Article
+import com.androiddevs.mvvmnewsapp.domain.models.Article
+
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_article_preview.view.*
 
 class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
-    inner class ArticleViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    inner class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     private val differCallback = object : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {

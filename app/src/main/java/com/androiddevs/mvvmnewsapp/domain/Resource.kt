@@ -1,4 +1,4 @@
-package com.androiddevs.mvvmnewsapp.util
+package com.androiddevs.mvvmnewsapp.domain
 
 sealed class Resource<T>(
     val data: T? = null,

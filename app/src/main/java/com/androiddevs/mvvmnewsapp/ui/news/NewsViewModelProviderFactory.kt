@@ -1,9 +1,9 @@
-package com.androiddevs.mvvmnewsapp.ui
+package com.androiddevs.mvvmnewsapp.ui.news
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.androiddevs.mvvmnewsapp.repository.NewsRepository
+import com.androiddevs.mvvmnewsapp.data.repository.NewsRepository
 
 class NewsViewModelProviderFactory(
     val app: Application,
