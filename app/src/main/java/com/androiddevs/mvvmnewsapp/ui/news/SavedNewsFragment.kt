@@ -9,16 +9,17 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.androiddevs.mvvmnewsapp.R
+import com.androiddevs.mvvmnewsapp.databinding.FragmentSavedNewsBinding
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_saved_news.*
 
 class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
-
+    lateinit var binding: FragmentSavedNewsBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentSavedNewsBinding.bind(view)
         viewModel = (activity as NewsActivity).viewModel
         setupRecyclerView()
 
@@ -58,7 +59,7 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
         }
 
         ItemTouchHelper(itemTouchHelperCallback).apply {
-            attachToRecyclerView(rvSavedNews)
+            attachToRecyclerView(binding.rvSavedNews)
         }
 
         viewModel.savedNews.observe(viewLifecycleOwner, Observer { articles ->
@@ -69,7 +70,7 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
     private fun setupRecyclerView() {
         newsAdapter = NewsAdapter()
-        rvSavedNews.apply {
+        binding.rvSavedNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
         }
