@@ -3,8 +3,9 @@ package com.androiddevs.mvvmnewsapp.data.remote.datasource
 import com.androiddevs.mvvmnewsapp.data.remote.api.NewsAPI
 import com.androiddevs.mvvmnewsapp.domain.models.NewsResponse
 import retrofit2.Response
+import javax.inject.Inject
 
-class NewsRemoteDataSource(val api: NewsAPI) {
+class NewsRemoteDataSource @Inject constructor(private val api: NewsAPI) {
 
     suspend fun getBreakingNews(
         countryCode: String,

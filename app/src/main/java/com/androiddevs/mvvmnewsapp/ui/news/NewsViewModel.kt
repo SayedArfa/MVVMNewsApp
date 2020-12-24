@@ -1,22 +1,19 @@
 package com.androiddevs.mvvmnewsapp.ui.news
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.*
 
 import com.androiddevs.mvvmnewsapp.data.repository.NewsRepository
 import com.androiddevs.mvvmnewsapp.domain.Resource
 import com.androiddevs.mvvmnewsapp.domain.models.Article
 import com.androiddevs.mvvmnewsapp.domain.models.NewsResponse
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NewsViewModel(
-    app: Application,
-    val newsRepository: NewsRepository
-) : AndroidViewModel(app) {
-
+class NewsViewModel @ViewModelInject constructor(
+    private val newsRepository: NewsRepository
+) : ViewModel() {
     val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var breakingNewsPage = 1
     var breakingNewsResponse: NewsResponse? = null

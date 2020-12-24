@@ -2,9 +2,10 @@ package com.androiddevs.mvvmnewsapp.data.local.datasource
 
 import com.androiddevs.mvvmnewsapp.data.local.db.ArticleDao
 import com.androiddevs.mvvmnewsapp.data.models.ArticleEntity
+import javax.inject.Inject
 
 
-class NewsLocalDataSource(val articleDao: ArticleDao) {
+class NewsLocalDataSource @Inject constructor(private val articleDao: ArticleDao) {
     suspend fun upsert(article: ArticleEntity) =
         articleDao.upsert(article)
 

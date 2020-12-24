@@ -8,12 +8,16 @@ import com.androiddevs.mvvmnewsapp.domain.models.Article
 import com.androiddevs.mvvmnewsapp.domain.models.NewsResponse
 import com.androiddevs.mvvmnewsapp.domain.repository.NewsRepository
 import com.androiddevs.mvvmnewsapp.util.BaseNetworkHelper
+import com.androiddevs.mvvmnewsapp.util.NetworkHelper
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 import java.io.IOException
+import javax.inject.Inject
 
-class NewsRepository(
-    val newsLocalDataSource: NewsLocalDataSource,
-    val newsRemoteDataSource: NewsRemoteDataSource,
-    val networkHelper: BaseNetworkHelper
+@ActivityRetainedScoped
+class NewsRepository @Inject constructor(
+    private val newsLocalDataSource: NewsLocalDataSource,
+    private val newsRemoteDataSource: NewsRemoteDataSource,
+    private val networkHelper: BaseNetworkHelper
 ) : NewsRepository {
     override suspend fun getBreakingNews(
         countryCode: String,
