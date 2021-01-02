@@ -2,6 +2,7 @@ package com.androiddevs.mvvmnewsapp.data.repository
 
 import com.androiddevs.mvvmnewsapp.data.local.datasource.NewsLocalDataSource
 import com.androiddevs.mvvmnewsapp.data.local.mapper.ArticleMapper
+import com.androiddevs.mvvmnewsapp.data.remote.SafeApiCall
 import com.androiddevs.mvvmnewsapp.data.remote.datasource.NewsRemoteDataSource
 import com.androiddevs.mvvmnewsapp.domain.Resource
 import com.androiddevs.mvvmnewsapp.domain.models.Article
@@ -23,7 +24,11 @@ class NewsRepository @Inject constructor(
         countryCode: String,
         pageNumber: Int
     ): Resource<NewsResponse> {
-        try {
+
+        return SafeApiCall(networkHelper) {
+            newsRemoteDataSource.getBreakingNews(countryCode, pageNumber)
+        }
+        /*try {
             if (networkHelper.hasInternetConnection()) {
                 val response = newsRemoteDataSource.getBreakingNews(countryCode, pageNumber)
                 if (response.isSuccessful) {
@@ -40,30 +45,33 @@ class NewsRepository @Inject constructor(
                 is IOException -> return Resource.Error("Network Failure")
                 else -> return Resource.Error("Conversion Error")
             }
-        }
+        }*/
     }
 
     override suspend fun searchNews(searchQuery: String, pageNumber: Int): Resource<NewsResponse> {
-        try {
-            if (networkHelper.hasInternetConnection()) {
-                val response = newsRemoteDataSource.searchForNews(searchQuery, pageNumber)
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        return Resource.Success(it)
-                    }
-                }
-                return Resource.Error(response.message())
-
-
-            } else {
-                return Resource.Error("No internet connection")
-            }
-        } catch (t: Throwable) {
-            when (t) {
-                is IOException -> return Resource.Error("Network Failure")
-                else -> return Resource.Error("Conversion Error")
-            }
+        return SafeApiCall(networkHelper) {
+            newsRemoteDataSource.searchForNews(searchQuery, pageNumber)
         }
+        /*  try {
+              if (networkHelper.hasInternetConnection()) {
+                  val response = newsRemoteDataSource.searchForNews(searchQuery, pageNumber)
+                  if (response.isSuccessful) {
+                      response.body()?.let {
+                          return Resource.Success(it)
+                      }
+                  }
+                  return Resource.Error(response.message())
+
+
+              } else {
+                  return Resource.Error("No internet connection")
+              }
+          } catch (t: Throwable) {
+              when (t) {
+                  is IOException -> return Resource.Error("Network Failure")
+                  else -> return Resource.Error("Conversion Error")
+              }
+          }*/
 
     }
 

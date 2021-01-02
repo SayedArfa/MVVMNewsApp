@@ -30,11 +30,16 @@ class NewsViewModel @ViewModelInject constructor(
     }
 
     fun getBreakingNews(countryCode: String) = viewModelScope.launch {
-        safeBreakingNewsCall(countryCode)
+        breakingNews.postValue(Resource.Loading())
+        val response = newsRepository.getBreakingNews(countryCode, breakingNewsPage)
+        handleBreakingNewsResponse(response)
     }
 
     fun searchNews(searchQuery: String) = viewModelScope.launch {
-        safeSearchNewsCall(searchQuery)
+        newSearchQuery = searchQuery
+        searchNews.postValue(Resource.Loading())
+        val response = newsRepository.searchNews(searchQuery, searchNewsPage)
+        handleSearchNewsResponse(response)
     }
 
     private fun handleBreakingNewsResponse(response: Resource<NewsResponse>) {
@@ -92,23 +97,6 @@ class NewsViewModel @ViewModelInject constructor(
         newsRepository.deleteArticle(article)
         getSavedNews()
     }
-
-    private suspend fun safeSearchNewsCall(searchQuery: String) {
-        newSearchQuery = searchQuery
-        searchNews.postValue(Resource.Loading())
-        val response = newsRepository.searchNews(searchQuery, searchNewsPage)
-        handleSearchNewsResponse(response)
-    }
-
-    private suspend fun safeBreakingNewsCall(countryCode: String) {
-        breakingNews.postValue(Resource.Loading())
-        val response = newsRepository.getBreakingNews(countryCode, breakingNewsPage)
-        handleBreakingNewsResponse(response)
-
-
-    }
-
-
 }
 
 
